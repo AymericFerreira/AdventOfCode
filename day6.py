@@ -1,5 +1,3 @@
-import numpy as np
-
 file = open('day6Files\input.txt', 'r')
 content = file.read()
 voteList = content.split('\n\n')
