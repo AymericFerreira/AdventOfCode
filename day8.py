@@ -33,11 +33,15 @@ def part_one():
 
 
 def part_two():
-    for jmp_number in range(0, len(commandList)):
+    for commutation_number in range(len(commandList)):
         newList = open('day8Files\input.txt', 'r').read().split('\n')
 
-        if newList[jmp_number] != newList[jmp_number].replace('nop', 'jmp'):
-            newList[jmp_number] = newList[jmp_number].replace('nop', 'jmp')
+        if newList[commutation_number] != newList[commutation_number].replace('nop', 'jmp') or \
+                newList[commutation_number] != newList[commutation_number].replace('jmp', 'nop'):
+            if newList[commutation_number] != newList[commutation_number].replace('nop', 'jmp'):
+                newList[commutation_number] = newList[commutation_number].replace('nop', 'jmp')
+            else:
+                newList[commutation_number] = newList[commutation_number].replace('jmp', 'nop')
             line = 0
             eol = True
             lineList = []
@@ -45,57 +49,26 @@ def part_two():
 
             while eol:
                 if line >= len(newList):
-                    print(f'JMP {acc} acc')
+                    print(f'Accuracy value : {acc}')
                     eol = False
                 else:
-                    command = newList[line]
-                    instruction, number = command.split()
-
                     if line in lineList:
                         eol = False
 
                     else:
                         lineList.append(line)
 
-                        if instruction == 'jmp':
-                            line += int(number)
-                        elif instruction == 'acc':
+                        command = newList[line]
+                        instruction, number = command.split()
+
+                        if instruction == 'acc':
                             line += 1
                             acc += int(number)
+                        elif instruction == 'jmp':
+                            line += int(number)
                         else:
                             line += 1
 
-    for nop_number in range(0, len(commandList)):
-        newList = open('day8Files\input.txt', 'r').read().split('\n')
-
-        if newList[nop_number] != newList[nop_number].replace('jmp', 'nop'):
-            newList[nop_number] = newList[nop_number].replace('jmp', 'nop')
-            line = 0
-            eol = True
-            lineList = []
-            acc = 0
-
-            while eol:
-                if line >= len(newList):
-                    print(f'NOP {acc} acc')
-                    eol = False
-                else:
-                    command = newList[line]
-                    instruction, number = command.split()
-
-                    if line in lineList:
-                        eol = False
-
-                    else:
-                        lineList.append(line)
-
-                        if instruction == 'jmp':
-                            line += int(number)
-                        elif instruction == 'acc':
-                            line += 1
-                            acc += int(number)
-                        else:
-                            line += 1
 
 part_one()
 part_two()
